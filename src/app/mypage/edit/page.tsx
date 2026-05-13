@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { checkLoginId, updateUser } from '@/api/auth';
-import { NAME_REGEX } from '@/constants';
+import { NAME_REGEX, STORAGE_KEY } from '@/constants';
 import { getApiErrorDetail } from '@/utils/apiError';
 import { useRequireAuth } from '@/hooks/useRequireAuth';
 
