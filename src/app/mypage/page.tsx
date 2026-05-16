@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { updateUser } from '@/api/auth';
+import { updateUser, deleteUser } from '@/api/auth';
 import { useRequireAuth } from '@/hooks/useRequireAuth';
+import { STORAGE_KEY } from '@/constants';
 
 /**
  * 마이페이지 컴포넌트.
@@ -15,6 +16,24 @@ export default function MyPage() {
   const user = useRequireAuth();
   const [pwForm, setPwForm] = useState({ password: '', passwordConfirm: '', error: '', success: false });
   const [pwSaving, setPwSaving] = useState(false);
+  const [withdrawing, setWithdrawing] = useState(false);
+
+  const handleWithdraw = async () => {
+    if (!confirm(
+      '회원 탈퇴 시 모든 대화 내역, 업로드한 문서 및 폴더가 영구 삭제되며 복구할 수 없습니다.\n\n정말로 탈퇴하시겠습니까?'
+    )) return;
+    if (!user) return;
+    setWithdrawing(true);
+    try {
+      await deleteUser(user.id);
+      localStorage.removeItem(STORAGE_KEY);
+      router.push('/');
+    } catch {
+      alert('회원 탈퇴에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      setWithdrawing(false);
+    }
+  };
 
   /** 비밀번호 변경 폼 제출 핸들러. 유효성 검사 후 API를 호출합니다. */
   const handlePwSave = async (e: React.FormEvent) => {
@@ -116,6 +135,16 @@ export default function MyPage() {
             {pwSaving ? '저장 중...' : '비밀번호 변경'}
           </button>
         </form>
+
+        <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+          <button
+            onClick={handleWithdraw}
+            disabled={withdrawing}
+            className="text-sm text-red-400 hover:text-red-600 disabled:opacity-50 transition-colors"
+          >
+            {withdrawing ? '탈퇴 처리 중...' : '회원 탈퇴'}
+          </button>
+        </div>
       </div>
     </div>
   );

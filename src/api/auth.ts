@@ -29,6 +29,11 @@ export async function checkLoginId(loginId: string): Promise<boolean> {
   return res.data.available;
 }
 
+/** 사용자 계정과 모든 데이터를 삭제합니다. */
+export async function deleteUser(userId: string): Promise<void> {
+  await client.delete(`/auth/users/${userId}`);
+}
+
 /** 사용자 정보를 수정합니다. 변경할 필드만 포함하면 됩니다. */
 export async function updateUser(
   userId: string,
