@@ -32,7 +32,7 @@ export default function ChatView({ messages, currentSessionId, isAsking, onSend 
   return (
     <div className="max-w-4xl mx-auto h-full flex flex-col">
       {/* 메시지 목록 영역 */}
-      <div className="flex-1 space-y-8 pb-32 pt-4">
+      <div className="flex-1 space-y-8 pb-44 pt-4">
         {messages.length === 0 ? (
           /* 메시지가 없을 때 표시되는 빈 화면 */
           <div className="flex flex-col items-center justify-center h-full text-center py-20">
@@ -110,18 +110,6 @@ export default function ChatView({ messages, currentSessionId, isAsking, onSend 
             {/* 입력창 배경 글로우 효과 */}
             <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-[2rem] blur opacity-15 group-hover:opacity-25 transition duration-1000 group-focus-within:opacity-30" />
             <div className="relative bg-white border border-gray-200 rounded-[2rem] shadow-2xl flex flex-col p-3 gap-2">
-              <div className="flex items-center gap-2 px-2">
-                <input
-                  type="checkbox"
-                  id="allow-ai-answer"
-                  checked={allowAiAnswer}
-                  onChange={e => setAllowAiAnswer(e.target.checked)}
-                  className="w-3.5 h-3.5 rounded accent-purple-500 cursor-pointer"
-                />
-                <label htmlFor="allow-ai-answer" className="text-xs text-gray-400 cursor-pointer select-none">
-                  AI 답변 허용
-                </label>
-              </div>
               <div className="flex items-end gap-2">
               <textarea
                 rows={1}
@@ -144,6 +132,18 @@ export default function ChatView({ messages, currentSessionId, isAsking, onSend 
               >
                 {isAsking ? <Loader2 size={22} className="animate-spin" /> : <Send size={22} />}
               </button>
+              </div>
+              <div className="flex items-center gap-2 px-2 pb-1">
+                <input
+                  type="checkbox"
+                  id="allow-ai-answer"
+                  checked={allowAiAnswer}
+                  onChange={e => setAllowAiAnswer(e.target.checked)}
+                  className="w-3.5 h-3.5 rounded accent-purple-500 cursor-pointer"
+                />
+                <label htmlFor="allow-ai-answer" className="text-xs text-gray-600 font-semibold cursor-pointer select-none">
+                  AI 답변 허용
+                </label>
               </div>
             </div>
           </div>
