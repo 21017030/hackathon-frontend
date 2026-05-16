@@ -112,7 +112,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-[#F8F9FB] flex items-center justify-center py-10">
       <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-8">
-        <h1 className="text-2xl font-bold text-indigo-600 text-center mb-2">VibeLRS</h1>
+        <h1 className="text-2xl font-bold text-indigo-600 text-center mb-2">Study Killer</h1>
         <p className="text-center text-gray-500 text-sm mb-8">회원가입</p>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
