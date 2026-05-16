@@ -56,9 +56,7 @@ export default function Sidebar({
           className="flex items-center gap-2 mb-8 cursor-pointer"
           onClick={onHomeClick}
         >
-          <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
-            <img src="/logo.png" alt="Study Killer logo" className="w-6 h-6 object-contain brightness-0 invert" />
-          </div>
+          <img src="/logo.png" alt="Study Killer logo" className="w-8 h-8 object-contain" />
           <span className="text-xl font-bold tracking-tight text-gray-900">Study Killer</span>
         </div>
 
