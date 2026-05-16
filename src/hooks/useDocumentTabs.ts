@@ -51,15 +51,15 @@ export function useDocumentTabs() {
   };
 
   /** 특정 탭에서 AI에게 질문을 보내고 답변을 메시지 목록에 추가합니다. */
-  const askInTab = async (documentId: number, content: string) => {
+  const askInTab = async (documentId: number, content: string, allowAiAnswer: boolean = false) => {
     setTabs(prev => prev.map(t => t.documentId === documentId
       ? { ...t, messages: [...t.messages, { sender: 'user', content }], isAsking: true }
       : t
     ));
     try {
-      const { answer } = await askAboutDocument(documentId, content);
+      const { answer, sources } = await askAboutDocument(documentId, content, allowAiAnswer);
       setTabs(prev => prev.map(t => t.documentId === documentId
-        ? { ...t, messages: [...t.messages, { sender: 'ai', content: answer }], isAsking: false }
+        ? { ...t, messages: [...t.messages, { sender: 'ai', content: answer, sources }], isAsking: false }
         : t
       ));
     } catch {

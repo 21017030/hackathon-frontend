@@ -306,7 +306,7 @@ export default function App() {
               documentId={activeTabId}
               messages={activeTab.messages}
               isAsking={activeTab.isAsking}
-              onSend={(content) => askInTab(activeTabId, content)}
+              onSend={(content, allowAiAnswer) => askInTab(activeTabId, content, allowAiAnswer)}
               onClear={() => clearTab(activeTabId)}
             />
           </div>
