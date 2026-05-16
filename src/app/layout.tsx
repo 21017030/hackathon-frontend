@@ -12,6 +12,9 @@ const geistSans = Geist({
 export const metadata: Metadata = {
   title: "Study Killer",
   description: "대학생을 위한 RAG 기반 AI 학습 보조 시스템",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
