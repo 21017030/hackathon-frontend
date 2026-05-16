@@ -59,7 +59,8 @@ export async function askAboutDocument(
   documentId: number,
   content: string,
   allowAiAnswer: boolean = false,
-): Promise<{ answer: string; sources?: { filename: string; category: string }[] }> {
+): Promise<{ answer: string; sources?: { filename: string; category: string; page: null }[] }> {
   const res = await client.post(`/documents/${documentId}/ask`, { content, allow_ai_answer: allowAiAnswer });
-  return { answer: res.data.answer, sources: res.data.sources };
+  const sources = (res.data.sources ?? []).map((s: { filename: string; category: string }) => ({ ...s, page: null }));
+  return { answer: res.data.answer, sources };
 }
