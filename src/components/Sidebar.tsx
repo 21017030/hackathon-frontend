@@ -56,8 +56,19 @@ export default function Sidebar({
           className="flex items-center gap-2 mb-8 cursor-pointer"
           onClick={onHomeClick}
         >
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold">V</div>
-          <span className="text-xl font-bold tracking-tight text-indigo-900">Study Killer</span>
+          <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center relative overflow-hidden">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* 펼쳐진 책 - 왼쪽 페이지 */}
+              <path d="M1 12 L10 10.5 L10 20 L1 20 Z" fill="white" opacity="0.85"/>
+              {/* 펼쳐진 책 - 오른쪽 페이지 */}
+              <path d="M12 10.5 L21 12 L21 20 L12 20 Z" fill="white" opacity="0.7"/>
+              {/* 책 상단 곡선 (펼쳐진 모양) */}
+              <path d="M1 12 Q11 8.5 21 12" stroke="white" strokeWidth="0.8" fill="none" opacity="0.5"/>
+              {/* 번개 */}
+              <path d="M13.5 1 L8.5 12 L12 12 L9 21 L16 9.5 L12.5 9.5 Z" fill="#FBBF24"/>
+            </svg>
+          </div>
+          <span className="text-xl font-bold tracking-tight text-gray-900">Study Killer</span>
         </div>
 
         <nav className="space-y-1">
