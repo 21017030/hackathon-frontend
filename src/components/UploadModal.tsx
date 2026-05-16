@@ -22,6 +22,7 @@ interface Props {
 export default function UploadModal({ categories, initialCategoryId, showFolderSelect, uploadStatus, onUpload, onClose }: Props) {
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(initialCategoryId);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [error, setError] = useState('');
 
   /** 드롭된 파일 중 첫 번째 파일을 선택 파일로 설정합니다. */
   const onDrop = useCallback((files: File[]) => {
@@ -128,7 +129,8 @@ export default function UploadModal({ categories, initialCategoryId, showFolderS
           )}
         </div>
 
-        <div className="flex gap-3 mt-6">
+        {error && <p className="text-red-500 text-xs mt-3 text-center">{error}</p>}
+        <div className="flex gap-3 mt-3">
           <button
             onClick={onClose}
             className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-600 font-bold text-sm hover:bg-gray-50 transition-colors"
@@ -136,7 +138,15 @@ export default function UploadModal({ categories, initialCategoryId, showFolderS
             취소
           </button>
           <button
-            onClick={() => selectedFile && onUpload(selectedFile, selectedCategoryId)}
+            onClick={() => {
+              if (!selectedFile) return;
+              if (showFolderSelect && !selectedCategoryId) {
+                setError('폴더를 선택해주세요.');
+                return;
+              }
+              setError('');
+              onUpload(selectedFile, selectedCategoryId);
+            }}
             disabled={!selectedFile}
             className="flex-1 py-3 rounded-xl bg-indigo-600 text-white font-bold text-sm hover:bg-indigo-700 disabled:bg-gray-200 disabled:text-gray-400 transition-all"
           >
