@@ -163,13 +163,13 @@ export default function App() {
     }
   };
 
-  const handleSend = (content: string) => {
+  const handleSend = (content: string, allowAiAnswer: boolean) => {
     requireAuth(() => {
       // 선택된 폴더가 있다면 해당 폴더 내의 문서들만 참고하여 답변하도록 설정
       const docIds = selectedCategoryId
         ? documents.filter(d => d.category_id === selectedCategoryId).map(d => d.id)
         : undefined;
-      sendMessage(content, docIds);
+      sendMessage(content, docIds, allowAiAnswer);
     });
   };
 

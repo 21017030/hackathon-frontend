@@ -27,11 +27,13 @@ export async function askQuestion(
   sessionId: number,
   content: string,
   documentIds?: number[],
+  allowAiAnswer: boolean = false,
 ): Promise<Message> {
   const res = await client.post('/chat/ask', {
     session_id: sessionId,
     content,
     document_ids: documentIds ?? null,
+    allow_ai_answer: allowAiAnswer,
   });
   return { ...res.data.message, sources: res.data.sources ?? [] };
 }

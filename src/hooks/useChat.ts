@@ -20,7 +20,7 @@ export function useChat() {
   };
 
   /** 질문을 전송하고 AI 답변을 메시지 목록에 추가합니다. */
-  const sendMessage = async (content: string, documentIds?: number[]) => {
+  const sendMessage = async (content: string, documentIds?: number[], allowAiAnswer: boolean = false) => {
     if (!currentSessionId || !content.trim() || isAsking) return;
     setIsAsking(true);
 
@@ -34,7 +34,7 @@ export function useChat() {
     setMessages(prev => [...prev, tempMsg]);
 
     try {
-      const aiMsg = await askQuestion(currentSessionId, content, documentIds);
+      const aiMsg = await askQuestion(currentSessionId, content, documentIds, allowAiAnswer);
       setMessages(prev => [...prev, aiMsg]);
     } catch {
       alert('AI 응답을 가져오는데 실패했습니다.');

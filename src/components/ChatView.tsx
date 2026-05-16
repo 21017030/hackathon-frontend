@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageSquare, Send, Loader2, FileText } from 'lucide-react';
+import { MessageSquare, Send, Loader2, FileText, Sparkles } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -11,7 +11,7 @@ interface Props {
   messages: Message[];
   currentSessionId: number | null;
   isAsking: boolean;
-  onSend: (content: string) => void;
+  onSend: (content: string, allowAiAnswer: boolean) => void;
 }
 
 /**
@@ -20,11 +20,12 @@ interface Props {
  */
 export default function ChatView({ messages, currentSessionId, isAsking, onSend }: Props) {
   const [input, setInput] = useState('');
+  const [allowAiAnswer, setAllowAiAnswer] = useState(false);
 
   // 메시지 전송 핸들러
   const handleSend = () => {
     if (!input.trim() || !currentSessionId || isAsking) return;
-    onSend(input.trim());
+    onSend(input.trim(), allowAiAnswer);
     setInput('');
   };
 
@@ -70,12 +71,19 @@ export default function ChatView({ messages, currentSessionId, isAsking, onSend 
                       <div className="mt-3 pt-3 border-t border-gray-100">
                         <p className="text-[11px] font-bold text-gray-400 mb-2">참고 자료</p>
                         <div className="flex flex-wrap gap-1.5">
-                          {msg.sources.map((src, i) => (
-                            <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[11px] font-bold">
-                              <FileText size={10} />
-                              <span>{src.category} › {src.filename}</span>
-                            </div>
-                          ))}
+                          {msg.sources.map((src, i) =>
+                            src.filename === 'AI 답변' ? (
+                              <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 bg-purple-50 text-purple-600 rounded-lg text-[11px] font-bold">
+                                <Sparkles size={10} />
+                                <span>AI 답변</span>
+                              </div>
+                            ) : (
+                              <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[11px] font-bold">
+                                <FileText size={10} />
+                                <span>{src.category} › {src.filename}</span>
+                              </div>
+                            )
+                          )}
                         </div>
                       </div>
                     )}
@@ -101,7 +109,20 @@ export default function ChatView({ messages, currentSessionId, isAsking, onSend 
           <div className="relative group">
             {/* 입력창 배경 글로우 효과 */}
             <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-[2rem] blur opacity-15 group-hover:opacity-25 transition duration-1000 group-focus-within:opacity-30" />
-            <div className="relative bg-white border border-gray-200 rounded-[2rem] shadow-2xl flex items-end p-3 gap-2">
+            <div className="relative bg-white border border-gray-200 rounded-[2rem] shadow-2xl flex flex-col p-3 gap-2">
+              <div className="flex items-center gap-2 px-2">
+                <input
+                  type="checkbox"
+                  id="allow-ai-answer"
+                  checked={allowAiAnswer}
+                  onChange={e => setAllowAiAnswer(e.target.checked)}
+                  className="w-3.5 h-3.5 rounded accent-purple-500 cursor-pointer"
+                />
+                <label htmlFor="allow-ai-answer" className="text-xs text-gray-400 cursor-pointer select-none">
+                  AI 답변 허용
+                </label>
+              </div>
+              <div className="flex items-end gap-2">
               <textarea
                 rows={1}
                 value={input}
@@ -123,6 +144,7 @@ export default function ChatView({ messages, currentSessionId, isAsking, onSend 
               >
                 {isAsking ? <Loader2 size={22} className="animate-spin" /> : <Send size={22} />}
               </button>
+              </div>
             </div>
           </div>
         </div>
