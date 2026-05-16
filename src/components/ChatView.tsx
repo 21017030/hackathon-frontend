@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageSquare, Send, Loader2, FileText, Sparkles, History } from 'lucide-react';
+import { MessageSquare, Send, Loader2, FileText, Sparkles } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -76,11 +76,6 @@ export default function ChatView({ messages, currentSessionId, isAsking, onSend 
                               <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 bg-purple-50 text-purple-600 rounded-lg text-[11px] font-bold">
                                 <Sparkles size={10} />
                                 <span>AI 답변</span>
-                              </div>
-                            ) : src.filename === '이전 대화' ? (
-                              <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-600 rounded-lg text-[11px] font-bold">
-                                <History size={10} />
-                                <span>이전 대화</span>
                               </div>
                             ) : (
                               <div key={i} className="flex items-center gap-1.5 px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[11px] font-bold">
