@@ -151,6 +151,7 @@ export default function App() {
   };
 
   const handleSessionDelete = async (id: number) => {
+    if (!confirm('대화 내역이 모두 삭제됩니다. 계속하시겠습니까?')) return;
     try {
       await deleteSession(id);
       setSessions(prev => prev.filter(s => s.id !== id));

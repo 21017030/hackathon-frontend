@@ -41,7 +41,7 @@ export function useDocumentTabs() {
 
   /** 해당 탭의 채팅 내역을 서버에서도 삭제하고 초기화합니다. */
   const clearTab = async (documentId: number) => {
-    if (!confirm('채팅 내역을 초기화하시겠습니까?')) return;
+    if (!confirm('대화 내역이 모두 삭제됩니다. 계속하시겠습니까?')) return;
     try {
       await clearDocumentChat(documentId);
       setTabs(prev => prev.map(t => t.documentId === documentId ? { ...t, messages: [] } : t));
