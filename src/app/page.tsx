@@ -14,7 +14,7 @@ import { useAppData } from '@/hooks/useAppData';
 import { useAuth } from '@/hooks/useAuth';
 import { useChat } from '@/hooks/useChat';
 import { useDocumentTabs } from '@/hooks/useDocumentTabs';
-import { uploadDocument, deleteDocument, getDocuments } from '@/api/documents';
+import { uploadDocument, deleteDocument, getDocuments, retryDocument } from '@/api/documents';
 import { createCategory, deleteCategory } from '@/api/categories';
 import { createSession, deleteSession } from '@/api/chat';
 import { POLL_INTERVAL_MS, POLL_MAX_WAIT_MS } from '@/constants';
@@ -101,6 +101,15 @@ export default function App() {
         alert('폴더 생성에 실패했습니다.');
       }
     });
+  };
+
+  const handleRetryDocument = async (id: number) => {
+    try {
+      await retryDocument(id);
+      refresh();
+    } catch {
+      alert('재시도 요청에 실패했습니다.');
+    }
   };
 
   const handleDeleteDocument = async (id: number) => {
@@ -324,6 +333,7 @@ export default function App() {
                 onDeleteFolder={handleDeleteFolder}
                 onDeleteDocument={handleDeleteDocument}
                 onViewDocument={openTab}
+                onRetryDocument={handleRetryDocument}
                 onUpload={(categoryId) => openUploadModal(categoryId, false)}
               />
             ) : (

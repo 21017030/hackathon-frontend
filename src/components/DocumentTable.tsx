@@ -1,6 +1,6 @@
 'use client';
 
-import { FileText, CheckCircle2, Clock3, Upload, Trash2 } from 'lucide-react';
+import { FileText, CheckCircle2, Clock3, Upload, Trash2, RotateCcw } from 'lucide-react';
 import type { Category, Document } from '@/types';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
   onUpload: (categoryId: number) => void;
   onDeleteDocument: (id: number) => void;
   onViewDocument: (id: number, filename: string) => void;
+  onRetryDocument: (id: number) => void;
 }
 
 /** 문서 분석 상태(COMPLETED/FAILED/PENDING)를 뱃지로 표시하는 컴포넌트 */
@@ -50,6 +51,7 @@ export default function DocumentTable({
   onUpload,
   onDeleteDocument,
   onViewDocument,
+  onRetryDocument,
 }: Props) {
   const categoryName = categories.find(c => c.id === selectedCategoryId)?.name ?? '모든 자료';
 
@@ -105,13 +107,24 @@ export default function DocumentTable({
                   <StatusBadge status={doc.parsing_status} />
                 </td>
                 <td className="px-6 py-4 text-right">
-                  <button
-                    onClick={() => onDeleteDocument(doc.id)}
-                    className="p-2 bg-red-50 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm"
-                    title="문서 삭제"
-                  >
-                    <Trash2 size={14} />
-                  </button>
+                  <div className="flex items-center justify-end gap-2">
+                    {doc.parsing_status === 'FAILED' && (
+                      <button
+                        onClick={() => onRetryDocument(doc.id)}
+                        className="p-2 bg-amber-50 text-amber-500 rounded-xl hover:bg-amber-500 hover:text-white transition-all shadow-sm"
+                        title="분석 재시도"
+                      >
+                        <RotateCcw size={14} />
+                      </button>
+                    )}
+                    <button
+                      onClick={() => onDeleteDocument(doc.id)}
+                      className="p-2 bg-red-50 text-red-400 rounded-xl hover:bg-red-500 hover:text-white transition-all shadow-sm"
+                      title="문서 삭제"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}

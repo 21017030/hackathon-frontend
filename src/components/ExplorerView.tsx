@@ -15,6 +15,7 @@ interface Props {
   onDeleteFolder: (id: number) => void;
   onDeleteDocument: (id: number) => void;
   onViewDocument: (id: number, filename: string) => void;
+  onRetryDocument: (id: number) => void;
 }
 
 /**
@@ -31,6 +32,7 @@ export default function ExplorerView({
   onDeleteFolder,
   onDeleteDocument,
   onViewDocument,
+  onRetryDocument,
 }: Props) {
   // 폴더가 선택된 경우 해당 폴더 문서만, 아니면 전체 문서를 표시
   const visibleDocs = selectedCategoryId === null
@@ -56,6 +58,7 @@ export default function ExplorerView({
         onUpload={onUpload as (id: number) => void}
         onDeleteDocument={onDeleteDocument}
         onViewDocument={onViewDocument}
+        onRetryDocument={onRetryDocument}
       />
     </div>
   );

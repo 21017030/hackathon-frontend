@@ -54,6 +54,11 @@ export async function clearDocumentChat(documentId: number): Promise<void> {
   await client.delete(`/documents/${documentId}/chat`);
 }
 
+/** FAILED/PARTIAL 문서의 RAG 처리를 다시 시도합니다. */
+export async function retryDocument(documentId: number): Promise<void> {
+  await client.post(`/documents/${documentId}/retry`);
+}
+
 /** 특정 문서에 대해 AI에게 질문합니다. */
 export async function askAboutDocument(
   documentId: number,
