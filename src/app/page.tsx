@@ -106,14 +106,17 @@ export default function App() {
   const handleRetryDocument = async (id: number) => {
     try {
       await retryDocument(id);
-      refresh(); // PENDING 상태로 즉시 갱신
+      setUploadStatus('analyzing');
+      refresh();
       await pollDocumentStatus(id);
-      refresh(); // 완료 후 최종 상태 갱신
+      refresh();
     } catch (e: any) {
-      refresh(); // FAILED 상태 반영
+      refresh();
       if (e?.message !== '분석 실패') {
         alert('재시도 요청에 실패했습니다.');
       }
+    } finally {
+      setUploadStatus(null);
     }
   };
 
