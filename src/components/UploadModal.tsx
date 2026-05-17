@@ -83,7 +83,7 @@ export default function UploadModal({ categories, initialCategoryId, showFolderS
           </button>
         </div>
 
-        {showFolderSelect && (
+        {showFolderSelect ? (
           <div className="mb-6">
             <p className="text-sm font-bold text-gray-600 mb-2">폴더 선택</p>
             <div className="relative">
@@ -100,6 +100,14 @@ export default function UploadModal({ categories, initialCategoryId, showFolderS
               </select>
               <ChevronDown size={16} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
+          </div>
+        ) : initialCategoryId && (
+          <div className="mb-6 flex items-center gap-2 px-3.5 py-2.5 bg-indigo-50 rounded-xl">
+            <Folder size={15} className="text-indigo-500 shrink-0" />
+            <p className="text-sm text-indigo-700 font-bold">
+              {categories.find(c => c.id === initialCategoryId)?.name ?? '알 수 없는 폴더'}
+            </p>
+            <span className="text-xs text-indigo-400 ml-auto">업로드 위치</span>
           </div>
         )}
 
