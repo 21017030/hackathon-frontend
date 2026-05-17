@@ -68,7 +68,7 @@ export default function App() {
         if (Date.now() - start > POLL_MAX_WAIT_MS) { reject(new Error('시간 초과')); return; }
         const docs = await getDocuments(userId);
         const doc = docs.find(d => d.id === documentId);
-        if (doc?.parsing_status === 'COMPLETED') resolve();
+        if (doc?.parsing_status === 'COMPLETED' || doc?.parsing_status === 'PARTIAL') resolve();
         else if (doc?.parsing_status === 'FAILED') reject(new Error('분석 실패'));
         else setTimeout(check, POLL_INTERVAL_MS);
       };

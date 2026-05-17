@@ -21,6 +21,13 @@ function StatusBadge({ status }: { status: Document['parsing_status'] }) {
       </div>
     );
   }
+  if (status === 'PARTIAL') {
+    return (
+      <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-yellow-50 text-yellow-600 font-bold text-[10px]" title="이미지/표 인식 없이 텍스트만 추출되었습니다">
+        ⚠️ 부분분석
+      </div>
+    );
+  }
   if (status === 'FAILED') {
     return (
       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 text-red-600 font-bold text-[10px]">

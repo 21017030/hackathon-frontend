@@ -13,7 +13,7 @@ export interface Category {
 export interface Document {
   id: number;
   original_file_name: string;
-  parsing_status: 'PENDING' | 'COMPLETED' | 'FAILED';
+  parsing_status: 'PENDING' | 'COMPLETED' | 'PARTIAL' | 'FAILED';
   category_id?: number;
   created_at: string;
 }
