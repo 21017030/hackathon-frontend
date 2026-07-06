@@ -26,7 +26,7 @@ export default function MyPage() {
     setWithdrawing(true);
     try {
       await deleteUser(user.id);
-      localStorage.removeItem(STORAGE_KEY);
+      sessionStorage.removeItem(STORAGE_KEY);
       router.push('/');
     } catch {
       alert('회원 탈퇴에 실패했습니다. 다시 시도해주세요.');

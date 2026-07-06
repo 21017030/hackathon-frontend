@@ -106,7 +106,7 @@ export default function EditProfilePage() {
 
     try {
       const updated = await updateUser(user.id, payload);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       router.push('/mypage');
     } catch (err: unknown) {
       const detail = getApiErrorDetail(err);

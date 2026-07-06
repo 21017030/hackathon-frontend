@@ -92,7 +92,7 @@ export default function RegisterPage() {
         form.password,
         form.name.trim(),
       );
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(user));
       router.push('/');
     } catch (err: unknown) {
       const detail = getApiErrorDetail(err);
